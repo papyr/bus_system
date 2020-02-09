@@ -9,16 +9,44 @@ using TrackAChild.Services;
 using Windows.UI.Popups;
 using System;
 using TrackAChild.Views;
+using Windows.UI.Xaml;
 
 namespace TrackAChild.ViewModels
 {
-    public class BusesViewModel
+    public class BusesViewModel : Observable
     {
         IBusService busService;
         public ICommand EditBusCommand { private set; get; }
         public ICommand RemoveBusCommand { private set; get; }
-
+        public ICommand AssignDriverCommand { private set; get; }
         public ICommand NewBusCommand { private set; get; }
+
+        private Visibility isAssignDriverButtonVisible = Visibility.Collapsed;
+        public Visibility IsAssignDriverButtonVisible
+        {
+            get { return isAssignDriverButtonVisible; }
+            set { isAssignDriverButtonVisible = value; OnPropertyChanged(nameof(IsAssignDriverButtonVisible)); }
+        }
+
+        private BusModel selectedBus;
+        public BusModel SelectedBus
+        {
+            get { return selectedBus; }
+            set
+            {
+                selectedBus = value;
+                OnPropertyChanged(nameof(SelectedBus));
+
+                if (SelectedBus != null)
+                {
+                    IsAssignDriverButtonVisible = Visibility.Visible;
+                }
+                else
+                {
+                    IsAssignDriverButtonVisible = Visibility.Collapsed;
+                }
+            }
+        }
 
         // Retrieve buses from bus service
         public ObservableCollection<BusModel> Buses
@@ -63,6 +91,11 @@ namespace TrackAChild.ViewModels
                 {
                     busService.RemoveBus(busModel);
                 }
+            });
+
+            AssignDriverCommand = new RelayCommand(async () =>
+            {
+                await new AssignDriverContentDialog().ShowAsync();
             });
         }
     }

@@ -1,0 +1,38 @@
+﻿<ContentDialog
+    x:Class="TrackAChild.Views.AssignDriverContentDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TrackAChild.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Assign Driver"
+    IsPrimaryButtonEnabled="{Binding IsAssignButtonEnabled}"
+    PrimaryButtonText="Assign"
+    SecondaryButtonText="Cancel"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Name="body" TextWrapping="Wrap">
+            <TextBlock.Text>
+                Select a driver from the list below
+            </TextBlock.Text>
+        </TextBlock>
+        <Grid Grid.Row="1" MaxHeight="300">
+            <ListView x:Name="resultsListView" Visibility="Visible"
+                  ItemsSource="{Binding Drivers, Mode=TwoWay}"
+                  SelectedItem="{Binding SelectedDriver, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding DriverName, Mode=TwoWay}" TextWrapping="WrapWholeWords" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </Grid>
+</ContentDialog>

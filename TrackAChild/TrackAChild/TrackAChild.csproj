@@ -188,6 +188,7 @@
     <Compile Include="Services\PassengerService.cs" />
     <Compile Include="Services\RouteService.cs" />
     <Compile Include="Services\StopService.cs" />
+    <Compile Include="ViewModels\AssignDriverViewModel.cs" />
     <Compile Include="ViewModels\BusesEditViewModel.cs" />
     <Compile Include="ViewModels\BusesNewViewModel.cs" />
     <Compile Include="ViewModels\BusesViewModel.cs" />
@@ -205,6 +206,9 @@
     <Compile Include="ViewModels\RoutesViewModel.cs" />
     <Compile Include="ViewModels\SearchAddressViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="Views\AssignDriverContentDialog.xaml.cs">
+      <DependentUpon>AssignDriverContentDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\BusEditPage.xaml.cs">
       <DependentUpon>BusEditPage.xaml</DependentUpon>
     </Compile>
@@ -283,6 +287,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\TextBlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AssignDriverContentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
