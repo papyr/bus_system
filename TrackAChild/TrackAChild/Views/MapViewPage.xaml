@@ -1,0 +1,19 @@
+﻿<Page
+    x:Class="TrackAChild.Views.MapViewPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TrackAChild.Views"
+    xmlns:behaviors="using:TrackAChild.Behaviors"
+    xmlns:maps="using:Windows.UI.Xaml.Controls.Maps"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <maps:MapControl
+            x:Name="mapControl"
+            Center="{x:Bind ViewModel.Center, Mode=OneWay}"
+            ZoomLevel="{x:Bind ViewModel.ZoomLevel, Mode=OneWay}" />
+    </Grid>
+</Page>

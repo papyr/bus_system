@@ -1,0 +1,82 @@
+﻿<Page
+    x:Class="TrackAChild.Views.DriverNewPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TrackAChild.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="3*" />
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" HorizontalAlignment="Center" 
+                         Orientation="Vertical"
+                        Margin="10"
+                         Padding="10">
+                <Image VerticalAlignment="Top" Source="ms-appx:/Assets/driver.png"
+                        Stretch="UniformToFill"
+                        Height="120"
+                        Width="120" />
+                <TextBlock Text="New Driver"
+                       VerticalAlignment="Bottom" 
+                       HorizontalAlignment="Center" 
+                       FontWeight="Bold"
+                       FontSize="34"/>
+            </StackPanel>
+            <Frame HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"
+                   Margin="8"
+                   Padding="8"
+                   Grid.Row="1">
+                <Grid Margin="40" MaxWidth="500">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.4*" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="0.5*" />
+                        <RowDefinition Height="0.4*" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="0.5*" />
+                        <RowDefinition Height="0.4*" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="Enter first name"
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Center" 
+                           FontWeight="Bold"
+                           FontSize="30"/>
+                    <TextBox Grid.Row="1" PlaceholderText="e.g. John" 
+                           Text="{Binding DriverFirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    </TextBox>
+                    <TextBlock Grid.Row="3" Text="Enter last name"
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Center" 
+                           FontWeight="Bold"
+                           FontSize="30"/>
+                    <TextBox Grid.Row="4" PlaceholderText="e.g. Reid" 
+                           Text="{Binding DriverLastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    </TextBox>
+                    <TextBlock Grid.Row="6" Text="Enter contact number"
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Center" 
+                           FontWeight="Bold"
+                           FontSize="30"/>
+                    <TextBox Grid.Row="7" PlaceholderText="e.g. +447777778778" 
+                           Text="{Binding DriverNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    </TextBox>
+                    <Button Grid.Row="8" Content="Add"
+                            MinHeight="50"
+                            MinWidth="150"
+                            HorizontalAlignment="Center"
+                            Command="{Binding PublishAddDriverCommand}"
+                            VerticalAlignment="Center"/>
+                </Grid>
+            </Frame>
+        </Grid>
+    </Grid>
+</Page>
