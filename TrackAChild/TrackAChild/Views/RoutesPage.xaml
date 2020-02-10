@@ -15,6 +15,24 @@
                 <RowDefinition Height="0.01*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" HorizontalAlignment="Left" 
+                         Orientation="Horizontal" 
+                         Padding="8" 
+                         Visibility="{Binding IsAssignBusButtonVisible}"
+                         Margin="0 0 20 0">
+                <Button Margin="0 0 40 0" Content="+" MinWidth="40" MinHeight="40" 
+                        FontWeight="Bold"
+                        FontSize="20"
+                        HorizontalAlignment="Right"
+                        HorizontalContentAlignment="Center"
+                        VerticalAlignment="Center"
+                        Command="{Binding AssignBusCommand}"/>
+                <TextBlock Text="Assign Bus" FontSize="20"
+                       FontWeight="Normal"
+                       HorizontalAlignment="Right"
+                       HorizontalTextAlignment="Center"
+                       VerticalAlignment="Center"/>
+            </StackPanel>
             <StackPanel Grid.Row="0" HorizontalAlignment="Right" 
                          Orientation="Horizontal" 
                          Padding="8"
@@ -37,7 +55,9 @@
                    VerticalAlignment="Stretch"
                    Margin="8"
                    Padding="8">
-                <ListView x:Name="RoutesListView" ItemsSource="{Binding Routes}" HorizontalAlignment="Stretch">
+                <ListView x:Name="RoutesListView" ItemsSource="{Binding Routes}" HorizontalAlignment="Stretch"
+                          SelectedItem="{Binding SelectedRoute, Mode=TwoWay,
+                    UpdateSourceTrigger=PropertyChanged}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid Padding="10" x:Name="Item">
@@ -47,6 +67,7 @@
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="2*" />
                                     <ColumnDefinition Width="2*" />
                                     <ColumnDefinition Width="0.5*" />
                                     <ColumnDefinition Width="0.5*" />
@@ -62,14 +83,20 @@
                                            HorizontalAlignment="Center"
                                            Text="{Binding RouteName}"
                                            FontWeight="Bold" />
-                                <Button Grid.Column="2"
+                                <TextBlock Grid.Column="2"
+                                           Grid.RowSpan="2"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           Text="{Binding AssignedBus, Converter={StaticResource AssignedValueToStringConverter}}"
+                                           FontWeight="Bold" />
+                                <Button Grid.Column="3"
                                             Grid.RowSpan="2"
                                             MinWidth="80"
                                             Content="Edit" HorizontalAlignment="Right"
                                             DataContext="{Binding ElementName=RoutesListView, Path=DataContext}"
                                             Command="{Binding EditRouteCommand}"
                                             CommandParameter="{Binding ElementName=Item}"/>
-                                <Button Grid.Column="3"
+                                <Button Grid.Column="4"
                                             Grid.RowSpan="2"
                                             MinWidth="80"
                                             Content="Remove" HorizontalAlignment="Right"

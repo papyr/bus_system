@@ -95,6 +95,7 @@ namespace TrackAChild.ViewModels
 
             AssignDriverCommand = new RelayCommand(async () =>
             {
+                busService.SetBusToEdit(SelectedBus);
                 await new AssignDriverContentDialog().ShowAsync();
             });
         }

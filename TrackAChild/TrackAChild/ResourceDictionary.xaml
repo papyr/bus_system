@@ -5,6 +5,7 @@
     xmlns:converters="using:TrackAChild.Converters">
     <converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
     <converters:PassengerModelToTypeString x:Key="PassengerModelToTypeString"/>
+    <converters:AssignedValueToStringConverter x:Key="AssignedValueToStringConverter"/>
     <Style TargetType="TimePicker" x:Key="TimePickerStyle">
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="MinWidth" Value="100" />

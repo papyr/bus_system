@@ -70,6 +70,7 @@ namespace TrackAChild
             serviceCollection.AddTransient<PassengerStudentEditViewModel>();
             serviceCollection.AddTransient<PassengerChaperoneEditViewModel>();
             serviceCollection.AddTransient<AssignDriverViewModel>();
+            serviceCollection.AddTransient<AssignBusViewModel>();
             serviceCollection.AddSingleton<IHttpService, HttpService>();
             serviceCollection.AddSingleton<IDriverService, DriverService>();
             serviceCollection.AddSingleton<IRouteService, RouteService>();

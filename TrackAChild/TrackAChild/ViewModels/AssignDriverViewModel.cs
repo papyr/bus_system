@@ -3,12 +3,16 @@ using TrackAChild.Helpers;
 using TrackAChild.Interfaces;
 using TrackAChild.Models;
 using Microsoft.Extensions.DependencyInjection;
+using System.Windows.Input;
 
 namespace TrackAChild.ViewModels
 {
     public class AssignDriverViewModel : Observable
     {
         IDriverService driverService;
+        IBusService busService;
+
+        public ICommand AssignDriverCommand { private set; get; }
 
         // Retrieve drivers from driver service
         public ObservableCollection<DriverModel> Drivers
@@ -37,6 +41,12 @@ namespace TrackAChild.ViewModels
         {
             // Retrieve driver service
             driverService = (App.Current as App).Container.GetService<IDriverService>();
+            busService = (App.Current as App).Container.GetService<IBusService>();
+
+            AssignDriverCommand = new RelayCommand(() =>
+            {
+                busService.AssignDriverToBus(SelectedDriver);
+            });
         }
     }
 }

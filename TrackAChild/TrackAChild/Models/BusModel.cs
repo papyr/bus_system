@@ -37,5 +37,12 @@ namespace TrackAChild.Models
             get { return vrn; }
             set { vrn = value; OnPropertyChanged(nameof(VRN)); }
         }
+
+        private DriverModel assignedDriver = null;
+        public DriverModel AssignedDriver
+        {
+            get { return assignedDriver; }
+            set { assignedDriver = value; OnPropertyChanged(nameof(AssignedDriver)); }
+        }
     }
 }

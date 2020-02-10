@@ -68,6 +68,7 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="2*" />
                                     <ColumnDefinition Width="0.5*" />
                                     <ColumnDefinition Width="0.5*" />
                                 </Grid.ColumnDefinitions>
@@ -82,14 +83,20 @@
                                            HorizontalAlignment="Center"
                                            Text="{Binding BusTag}"
                                            FontWeight="Bold" />
-                                <Button Grid.Column="2"
+                                <TextBlock Grid.Column="2"
+                                           Grid.RowSpan="2"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           Text="{Binding AssignedDriver, Converter={StaticResource AssignedValueToStringConverter}}"
+                                           FontWeight="Bold" />
+                                <Button Grid.Column="3"
                                             Grid.RowSpan="2"
                                             MinWidth="80"
                                             Content="Edit" HorizontalAlignment="Right"
                                             DataContext="{Binding ElementName=BusListView, Path=DataContext}"
                                             Command="{Binding EditBusCommand}"
                                             CommandParameter="{Binding ElementName=Item}"/>
-                                <Button Grid.Column="3"
+                                <Button Grid.Column="4"
                                             Grid.RowSpan="2"
                                             MinWidth="80"
                                             Content="Remove" HorizontalAlignment="Right"

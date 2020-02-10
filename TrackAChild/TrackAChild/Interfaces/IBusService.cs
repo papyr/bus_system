@@ -11,7 +11,8 @@ namespace TrackAChild.Interfaces
         void RemoveBus(object bus);
         //void EditBus(string busTag, string vrn, Specs specs, Maintenance maintenance); // need to properly implement
         void EditBus(string oldBusTag, string busTag, string vrn);
-        void SetBusToEdit(BusModel driverModel);
+        void SetBusToEdit(BusModel busModel);
+        void AssignDriverToBus(DriverModel driverModel);
         BusModel GetBusToEdit();
     }
 }

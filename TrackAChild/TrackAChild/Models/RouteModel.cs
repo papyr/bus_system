@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using TrackAChild.Helpers;
 using TrackAChild.Interfaces;
+using TrackAChild.Models;
 
 namespace TrackAChild
 {
@@ -24,6 +25,13 @@ namespace TrackAChild
         public List<DateTime> DatesForCurrentRoute {
             get { return datesForCurrentRoute; }
             set { datesForCurrentRoute = value; OnPropertyChanged(nameof(DatesForCurrentRoute)); }
+        }
+
+        private BusModel assignedBus = null;
+        public BusModel AssignedBus
+        {
+            get { return assignedBus; }
+            set { assignedBus = value; OnPropertyChanged(nameof(AssignedBus)); }
         }
 
         private void AddStop(StopModel stop) { stops.Add(stop); }

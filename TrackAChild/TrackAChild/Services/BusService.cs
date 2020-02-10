@@ -19,7 +19,8 @@ namespace TrackAChild.Services
 
         public void AddBus(string busTag, string vrn, Specs specs, Maintenance maintenance)
         {
-            BusModel busModel = new BusModel() { BusTag = busTag, VRN = vrn, Specification = specs, BusMaintenance = maintenance };
+            BusModel busModel = new BusModel() { BusTag = busTag, VRN = vrn, Specification = specs,
+                BusMaintenance = maintenance, AssignedDriver = null };
             Buses.Add(busModel);
         }
 
@@ -60,9 +61,15 @@ namespace TrackAChild.Services
             }
         }
 
-        public void SetBusToEdit(BusModel driverModel)
+        public void AssignDriverToBus(DriverModel driverModel)
         {
-            busToEdit = driverModel;
+            // Bus to edit should be set from buses page
+            busToEdit.AssignedDriver = driverModel;
+        }
+
+        public void SetBusToEdit(BusModel busModel)
+        {
+            busToEdit = busModel;
         }
 
         public BusModel GetBusToEdit()
