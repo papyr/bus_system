@@ -16,6 +16,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Name="body" TextWrapping="Wrap">
@@ -23,9 +24,15 @@
                 Select passengers from the list below
             </TextBlock.Text>
         </TextBlock>
-        <Grid Grid.Row="1" MaxHeight="300">
+        <ComboBox Grid.Row="1" Margin="10" SelectedIndex="0" Header="Type"
+                  SelectedItem="{Binding TypeSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <x:String>All</x:String>
+            <x:String>Student</x:String>
+            <x:String>Chaperone</x:String>
+        </ComboBox>
+        <Grid Grid.Row="2" MaxHeight="300">
             <ListView x:Name="resultsListView" Visibility="Visible"
-                  ItemsSource="{Binding Passengers, Mode=TwoWay}" SelectionMode="Multiple"
+                  ItemsSource="{Binding FilteredPassengers, Mode=TwoWay}" SelectionMode="Multiple"
                       SelectedItem="{Binding SelectedPassenger, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       SelectionChanged="{x:Bind ViewModel.SelectionChanged}">
                 <ListView.ItemTemplate>
