@@ -34,6 +34,13 @@ namespace TrackAChild
             set { assignedBus = value; OnPropertyChanged(nameof(AssignedBus)); }
         }
 
+        private List<PassengerModel> assignedPassengers = null;
+        public List<PassengerModel> AssignedPassengers
+        {
+            get { return assignedPassengers; }
+            set { assignedPassengers = value; OnPropertyChanged(nameof(AssignedPassengers)); }
+        }
+
         private void AddStop(StopModel stop) { stops.Add(stop); }
         private void RemoveStop(StopModel stop) { stops.Remove(stop); }
     }

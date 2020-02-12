@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using TrackAChild.Interfaces;
 using TrackAChild.Models;
 
@@ -33,6 +34,11 @@ namespace TrackAChild.Services
         public void AssignBusToRoute(BusModel busModel)
         {
             routeToEdit.AssignedBus = busModel;
+        }
+
+        public void AssignPassengersToRoute(List<PassengerModel> passengers)
+        {
+            routeToEdit.AssignedPassengers = passengers;
         }
     }
 }

@@ -1,0 +1,42 @@
+﻿<ContentDialog
+    x:Class="TrackAChild.Views.AssignPassengersContentDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TrackAChild.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Assign Passengers"
+    IsPrimaryButtonEnabled="{Binding IsAssignButtonEnabled}"
+    PrimaryButtonText="Assign"
+    SecondaryButtonText="Cancel"
+    PrimaryButtonCommandParameter="{Binding ElementName=resultsListView, Path=SelectedItems}"
+    PrimaryButtonCommand="{Binding AssignPassengersCommand}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Name="body" TextWrapping="Wrap">
+            <TextBlock.Text>
+                Select passengers from the list below
+            </TextBlock.Text>
+        </TextBlock>
+        <Grid Grid.Row="1" MaxHeight="300">
+            <ListView x:Name="resultsListView" Visibility="Visible"
+                  ItemsSource="{Binding Passengers, Mode=TwoWay}" SelectionMode="Multiple"
+                      SelectedItem="{Binding SelectedPassenger, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      SelectionChanged="{x:Bind ViewModel.SelectionChanged}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock TextWrapping="WrapWholeWords">
+                            <Run Text="{Binding FirstName, Mode=TwoWay}" />
+                            <Run Text="{Binding LastName, Mode=TwoWay}" />
+                        </TextBlock>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </Grid>
+</ContentDialog>

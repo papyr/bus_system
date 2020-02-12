@@ -16,6 +16,7 @@ namespace TrackAChild.ViewModels
 
         public ICommand NewRouteCommand { private set; get; }
         public ICommand AssignBusCommand { private set; get; }
+        public ICommand AssignPassengersCommand { private set; get; }
         public ICommand EditRouteCommand { private set; get; }
         public ICommand RemoveRouteCommand { private set; get; }
 
@@ -24,6 +25,13 @@ namespace TrackAChild.ViewModels
         {
             get { return isAssignBusButtonVisible; }
             set { isAssignBusButtonVisible = value; OnPropertyChanged(nameof(IsAssignBusButtonVisible)); }
+        }
+
+        private Visibility isAssignPassengersButtonVisible = Visibility.Collapsed;
+        public Visibility IsAssignPassengersButtonVisible
+        {
+            get { return isAssignPassengersButtonVisible; }
+            set { isAssignPassengersButtonVisible = value; OnPropertyChanged(nameof(IsAssignPassengersButtonVisible)); }
         }
 
         private RouteModel selectedRoute;
@@ -38,10 +46,12 @@ namespace TrackAChild.ViewModels
                 if (SelectedRoute != null)
                 {
                     IsAssignBusButtonVisible = Visibility.Visible;
+                    IsAssignPassengersButtonVisible = Visibility.Visible;
                 }
                 else
                 {
                     IsAssignBusButtonVisible = Visibility.Collapsed;
+                    IsAssignPassengersButtonVisible = Visibility.Collapsed;
                 }
             }
         }
@@ -76,6 +86,12 @@ namespace TrackAChild.ViewModels
             {
                 routeService.SetRouteToEdit(SelectedRoute);
                 await new AssignBusContentDialog().ShowAsync();
+            });
+
+            AssignPassengersCommand = new RelayCommand(async () =>
+            {
+                routeService.SetRouteToEdit(SelectedRoute);
+                await new AssignPassengersContentDialog().ShowAsync();
             });
         }
     }
