@@ -17,7 +17,8 @@ namespace TrackAChild.ViewModels
         // Retrieve passengers of route
         public List<PassengerModel> Passengers
         {
-            get { return routeService.GetRouteToEdit().AssignedPassengers; }
+            get { return routeService.GetRouteToEdit() != null
+                    ? routeService.GetRouteToEdit().AssignedPassengers : new List<PassengerModel>(); }
         }
 
         public ViewPassengerListViewModel()
