@@ -13,6 +13,7 @@
     <Grid>
         <maps:MapControl
             x:Name="mapControl"
+            Layers="{x:Bind ViewModel.MapLayers, Mode=OneWay}"
             Center="{x:Bind ViewModel.Center, Mode=OneWay}"
             ZoomLevel="{x:Bind ViewModel.ZoomLevel, Mode=OneWay}" />
     </Grid>

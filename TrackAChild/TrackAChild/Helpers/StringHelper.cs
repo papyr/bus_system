@@ -4,21 +4,26 @@
     {
         public static string GetFormattedStringForHttpRequest(string inputName)
         {
-            var splitElement = inputName.Split(' ');
-            var httpElement = "";
-            for (int index = 0; index < splitElement.Length; ++index)
+            if (inputName.Length > 0)
             {
-                if (index == splitElement.Length - 1)
+                var splitElement = inputName.Split(' ');
+                var httpElement = "";
+                for (int index = 0; index < splitElement.Length; ++index)
                 {
-                    httpElement += splitElement[index];
+                    if (index == splitElement.Length - 1)
+                    {
+                        httpElement += splitElement[index];
+                    }
+                    else
+                    {
+                        httpElement += splitElement[index] + "+";
+                    }
                 }
-                else
-                {
-                    httpElement += splitElement[index] + "+";
-                }
+
+                return httpElement;
             }
 
-            return httpElement;
+            return "";
         }
     }
 }

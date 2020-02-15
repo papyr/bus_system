@@ -1,22 +1,18 @@
 ﻿using TrackAChild.Interfaces;
-using Itinero;
-using Itinero.IO.Osm;
-using Itinero.Osm.Vehicles;
-using System.IO;
 using System.Collections.Generic;
 using Windows.UI.Xaml.Controls.Maps;
 using Microsoft.Extensions.DependencyInjection;
 using Windows.UI;
 using Windows.Devices.Geolocation;
-using TrackAChild.Services;
 using TrackAChild.Helpers;
+using System.Collections.ObjectModel;
 
 namespace TrackAChild.ViewModels
 {
     public class MapViewViewModel : Observable
     {
-        public MapControl Map { get; private set; }
         IRouteService routeService;
+        IMapService mapService;
 
         private const double DefaultZoomLevel = 17;
 
@@ -25,6 +21,9 @@ namespace TrackAChild.ViewModels
             Latitude = 47.609425,
             Longitude = -122.3417
         };
+
+        public ObservableCollection<MapLayer> MapLayers
+            { get; } = new ObservableCollection<MapLayer>();
 
         private double zoomLevel;
 
@@ -48,35 +47,15 @@ namespace TrackAChild.ViewModels
             ZoomLevel = DefaultZoomLevel;
 
             routeService = (App.Current as App).Container.GetService<IRouteService>();
-
-            // load some routing data and build a routing network.
-            var routerDb = new RouterDb();
-
-            var s = (App.Current as App).Container.GetService<IOSPathDependencies>().GetStoragePath();
-            var fullpath = "test.pbf";
-
-            using (var stream = new FileInfo(fullpath).OpenRead())
-            {
-                // create the network for cars only.
-                routerDb.LoadOsmData(stream, Vehicle.Car);
-            }
-
-            // create a router.
-            var router = new Router(routerDb);
-
-            // get a profile.
-            var profile = Vehicle.Car.Fastest(); // the default OSM car profile.
+            mapService = (App.Current as App).Container.GetService<IMapService>();
 
             // create a routerpoint from a location.
             // snaps the given location to the nearest routable edge.
-            var start = router.Resolve(profile, 51.443570f, -0.344270f);
-            var end = router.Resolve(profile, 51.425330f, -0.370930f);
+            var start = mapService.RetrieveRouterPoint(51.443570f, -0.344270f);
+            var end = mapService.RetrieveRouterPoint(51.425330f, -0.370930f);
 
             // calculate a route.
-            var route = router.Calculate(profile, start, end);
-
-            // Create map
-            Map = new MapControl();
+            var route = mapService.CalculateRoute(start, end);
 
             // Add polylines
             List<BasicGeoposition> positionValues = new List<BasicGeoposition>();
@@ -93,7 +72,15 @@ namespace TrackAChild.ViewModels
 
             polyline.Path = new Geopath(positionValues);
 
-            Map.MapElements.Add(polyline);
+            // Proper way is to create a map element layer
+            var elements = new List<MapElement>() { polyline };
+            var layer = new MapElementsLayer
+            {
+                ZIndex = 1,
+                MapElements = elements
+            };
+
+            MapLayers.Add(layer);
         }
     }
 }

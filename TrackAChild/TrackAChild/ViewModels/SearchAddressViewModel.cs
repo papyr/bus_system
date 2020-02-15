@@ -11,7 +11,6 @@ namespace TrackAChild.ViewModels
 {
     public class SearchAddressViewModel : Observable
     {
-        IMapService mapService;
         IHttpService httpService;
         IStopService stopService;
 
@@ -114,7 +113,6 @@ namespace TrackAChild.ViewModels
 
         public SearchAddressViewModel()
         {
-            mapService = (App.Current as App).Container.GetService<IMapService>();
             httpService = (App.Current as App).Container.GetService<IHttpService>();
             stopService = (App.Current as App).Container.GetService<IStopService>();
 

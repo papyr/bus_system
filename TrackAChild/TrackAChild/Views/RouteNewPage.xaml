@@ -2,8 +2,10 @@
     x:Class="TrackAChild.Views.RouteNewPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:TrackAChild.Views"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:views="using:TrackAChild.Views"
     xmlns:maps="using:Windows.UI.Xaml.Controls.Maps"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -124,10 +126,16 @@
             </SplitView.Pane>
 
             <Grid>
-                <maps:MapControl x:Name="routePlannerMap" ZoomInteractionMode="Auto" TiltInteractionMode="Disabled"
-                                 AllowFocusOnInteraction="True" IsFocusEngagementEnabled="True" ColorScheme="Dark"
+                <maps:MapControl x:Name="stopMap" Center="{x:Bind ViewModel.Center, Mode=TwoWay}"
+                                 ZoomLevel="{x:Bind ViewModel.ZoomLevel}"
+                                 Layers="{x:Bind ViewModel.MapLayers}"
                                  MapServiceToken="Iy8hICk2KKZV2q86cW0d~7lMbaxvOGXOvlMr-TAWyjw~ApBmHcO2WgUxnO3NyQkxP4ddkvmQB2CWD7Szo2ukxnVAUrYq9TwGlTNxG77JERwr">
-
+                    <i:Interaction.Behaviors>
+                        <ic:EventTriggerBehavior EventName="Loaded">
+                            <ic:InvokeCommandAction Command="{Binding MapLoaded}"
+                                                    CommandParameter="{Binding ElementName=stopMap, Mode=OneWay}"/>
+                        </ic:EventTriggerBehavior>
+                    </i:Interaction.Behaviors>
                 </maps:MapControl>
             </Grid>
         </SplitView>
