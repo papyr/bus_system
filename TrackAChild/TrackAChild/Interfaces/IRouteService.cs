@@ -12,5 +12,6 @@ namespace TrackAChild.Interfaces
         void SetRouteToEdit(RouteModel route);
         void AssignBusToRoute(BusModel busModel);
         void AssignPassengersToRoute(List<PassengerModel> passengers);
+        RouteModel GetRouteToEdit();
     }
 }

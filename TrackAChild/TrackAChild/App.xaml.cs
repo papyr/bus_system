@@ -72,6 +72,7 @@ namespace TrackAChild
             serviceCollection.AddTransient<AssignDriverViewModel>();
             serviceCollection.AddTransient<AssignBusViewModel>();
             serviceCollection.AddTransient<AssignPassengersViewModel>();
+            serviceCollection.AddTransient<ViewPassengerListViewModel>();
             serviceCollection.AddSingleton<IHttpService, HttpService>();
             serviceCollection.AddSingleton<IDriverService, DriverService>();
             serviceCollection.AddSingleton<IRouteService, RouteService>();

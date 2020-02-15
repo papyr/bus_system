@@ -69,7 +69,7 @@ namespace TrackAChild.ViewModels
 
         public AssignPassengersViewModel()
         {
-            // Retrieve bus and route service
+            // Retrieve passenger and route service
             routeService = (App.Current as App).Container.GetService<IRouteService>();
             passengerService = (App.Current as App).Container.GetService<IPassengerService>();
 

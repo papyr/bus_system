@@ -28,7 +28,7 @@
                         HorizontalContentAlignment="Center"
                         VerticalAlignment="Center"
                         Command="{Binding AssignBusCommand}"/>
-                    <TextBlock Text="Assign Bus" FontSize="20"
+                    <TextBlock Text="Re/Assign Bus" FontSize="20"
                        FontWeight="Normal"
                        HorizontalAlignment="Right"
                        HorizontalTextAlignment="Center"
@@ -46,7 +46,7 @@
                         HorizontalContentAlignment="Center"
                         VerticalAlignment="Center"
                         Command="{Binding AssignPassengersCommand}"/>
-                    <TextBlock Text="Assign Passengers" FontSize="20"
+                    <TextBlock Text="Re/Assign Passengers" FontSize="20"
                        FontWeight="Normal"
                        HorizontalAlignment="Right"
                        HorizontalTextAlignment="Center"
@@ -88,7 +88,8 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="2*" />
-                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="1.5*" />
+                                    <ColumnDefinition Width="0.8*" />
                                     <ColumnDefinition Width="0.5*" />
                                     <ColumnDefinition Width="0.5*" />
                                 </Grid.ColumnDefinitions>
@@ -112,11 +113,18 @@
                                 <Button Grid.Column="3"
                                             Grid.RowSpan="2"
                                             MinWidth="80"
+                                            Content="View Passengers" HorizontalAlignment="Right"
+                                            DataContext="{Binding ElementName=RoutesListView, Path=DataContext}"
+                                            Command="{Binding ViewPassengersCommand}"
+                                            CommandParameter="{Binding ElementName=Item}"/>
+                                <Button Grid.Column="4"
+                                            Grid.RowSpan="2"
+                                            MinWidth="80"
                                             Content="Edit" HorizontalAlignment="Right"
                                             DataContext="{Binding ElementName=RoutesListView, Path=DataContext}"
                                             Command="{Binding EditRouteCommand}"
                                             CommandParameter="{Binding ElementName=Item}"/>
-                                <Button Grid.Column="4"
+                                <Button Grid.Column="5"
                                             Grid.RowSpan="2"
                                             MinWidth="80"
                                             Content="Remove" HorizontalAlignment="Right"

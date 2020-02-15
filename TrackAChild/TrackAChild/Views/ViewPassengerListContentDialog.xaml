@@ -1,0 +1,43 @@
+﻿<ContentDialog
+    x:Class="TrackAChild.Views.ViewPassengerListContentDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TrackAChild.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    x:Name="ViewPassengerListCD"
+    Title="View Assigned Passengers">
+    <ContentDialog.ContentTemplate>
+        <DataTemplate>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Name="body" TextWrapping="Wrap">
+                    <TextBlock.Text>
+                        Display all passengers assigned to route
+                    </TextBlock.Text>
+                </TextBlock>
+                <Grid Grid.Row="1" MaxHeight="300">
+                    <ListView x:Name="resultsListView" Visibility="Visible"
+                  ItemsSource="{Binding Passengers, Mode=TwoWay}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock TextWrapping="WrapWholeWords">
+                            <Run Text="{Binding FirstName, Mode=TwoWay}" />
+                            <Run Text="{Binding LastName, Mode=TwoWay}" />
+                                </TextBlock>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+                <Button Grid.Row="2" Content="Close" Command="{Binding CloseDialog, Mode=OneWay}"
+                        CommandParameter="{Binding ElementName=ViewPassengerListCD}"
+                        VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="5"/>
+            </Grid>
+        </DataTemplate>
+    </ContentDialog.ContentTemplate>
+</ContentDialog>

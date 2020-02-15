@@ -17,6 +17,7 @@ namespace TrackAChild.ViewModels
         public ICommand NewRouteCommand { private set; get; }
         public ICommand AssignBusCommand { private set; get; }
         public ICommand AssignPassengersCommand { private set; get; }
+        public ICommand ViewPassengersCommand { private set; get; }
         public ICommand EditRouteCommand { private set; get; }
         public ICommand RemoveRouteCommand { private set; get; }
 
@@ -70,6 +71,12 @@ namespace TrackAChild.ViewModels
             NewRouteCommand = new RelayCommand(() =>
             {
                 NavigationService.Navigate(typeof(RouteNewPage));
+            });
+
+            ViewPassengersCommand = new RelayCommand(async () =>
+            {
+                routeService.SetRouteToEdit(SelectedRoute);
+                await new ViewPassengerListContentDialog().ShowAsync();
             });
 
             EditRouteCommand = new RelayCommand(() =>

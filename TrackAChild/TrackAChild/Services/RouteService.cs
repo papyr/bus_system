@@ -31,6 +31,11 @@ namespace TrackAChild.Services
             routeToEdit = route;
         }
 
+        public RouteModel GetRouteToEdit()
+        {
+            return routeToEdit;
+        }
+
         public void AssignBusToRoute(BusModel busModel)
         {
             routeToEdit.AssignedBus = busModel;
