@@ -20,6 +20,9 @@ namespace TrackAChild
         private TimeSpan arrivalTime;
         public TimeSpan ArrivalTime { get { return arrivalTime; } set { arrivalTime = value; OnPropertyChanged(nameof(ArrivalTime)); } }
 
+        private string status = StatusEnum.Waiting.ToString();
+        public string Status { get { return status; } set { status = value; OnPropertyChanged(nameof(Status)); } }
+
         public object Clone()
         {
             return this.MemberwiseClone();

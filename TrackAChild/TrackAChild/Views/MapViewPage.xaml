@@ -4,6 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:TrackAChild.Views"
     xmlns:behaviors="using:TrackAChild.Behaviors"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
     xmlns:maps="using:Windows.UI.Xaml.Controls.Maps"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -11,10 +13,100 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <maps:MapControl
-            x:Name="mapControl"
-            Layers="{x:Bind ViewModel.MapLayers, Mode=OneWay}"
-            Center="{x:Bind ViewModel.Center, Mode=OneWay}"
-            ZoomLevel="{x:Bind ViewModel.ZoomLevel, Mode=OneWay}" />
+        <SplitView IsPaneOpen="True"
+           DisplayMode="Inline"
+                   RequestedTheme="Dark"
+           OpenPaneLength="296">
+            <SplitView.Pane>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.2*"/>
+                        <RowDefinition Height="0.1*"/>
+                        <RowDefinition Height="0.01*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="Choose a route to view" Foreground="White" FontSize="34"
+                               TextWrapping="WrapWholeWords"
+                               HorizontalAlignment="Stretch" VerticalAlignment="Center" HorizontalTextAlignment="Center"/>
+                    <Grid Grid.Row="1" HorizontalAlignment="Stretch">
+                        <ComboBox Grid.Row="1" Margin="10" SelectedIndex="0" HorizontalAlignment="Stretch"
+                                  VerticalAlignment="Center"
+                                  ItemsSource="{x:Bind ViewModel.Routes}" DisplayMemberPath="RouteName"
+                                  SelectedItem="{x:Bind ViewModel.RouteSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Grid>
+                    <Border Grid.Row="2" MinHeight="1" Background="Transparent"/>
+                    <Grid Grid.Row="3" HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"
+                   Margin="8"
+                   Padding="8">
+                        <ListView x:Name="StopListView" ItemsSource="{Binding Stops}"
+                                  HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedStop,
+                            Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <ListView.Header>
+                                <Grid Margin="0 10 0 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0"
+                                           Text="Stop Name"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Column="1"
+                                           Text="Arrival Time"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Column="2"
+                                           Text="Status"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"/>
+                                </Grid>
+                            </ListView.Header>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Padding="10" x:Name="Item">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="2*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Left"
+                                           Text="{Binding Name}"
+                                           FontWeight="Normal" TextWrapping="Wrap" />
+                                        <TextBlock Grid.Column="1" HorizontalAlignment="Center"
+                                                   Text="{Binding ArrivalTime, Converter={StaticResource TimeToStringConverter}}"/>
+                                        <TextBlock Grid.Column="2"
+                                            MinWidth="40" FontWeight="Bold"
+                                            Text="{Binding Status}" HorizontalAlignment="Right"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                        </ListView>
+                    </Grid>
+                </Grid>
+            </SplitView.Pane>
+
+            <Grid>
+                <maps:MapControl x:Name="stopMap" Center="{x:Bind ViewModel.Center, Mode=TwoWay}"
+                                 ZoomLevel="{x:Bind ViewModel.ZoomLevel}"
+                                 Layers="{x:Bind ViewModel.MapLayers}"
+                                 MapServiceToken="Iy8hICk2KKZV2q86cW0d~7lMbaxvOGXOvlMr-TAWyjw~ApBmHcO2WgUxnO3NyQkxP4ddkvmQB2CWD7Szo2ukxnVAUrYq9TwGlTNxG77JERwr">
+                    <i:Interaction.Behaviors>
+                        <ic:EventTriggerBehavior EventName="Loaded">
+                            <ic:InvokeCommandAction Command="{Binding MapLoaded}"
+                                                    CommandParameter="{Binding ElementName=stopMap, Mode=OneWay}"/>
+                        </ic:EventTriggerBehavior>
+                    </i:Interaction.Behaviors>
+                </maps:MapControl>
+            </Grid>
+        </SplitView>
     </Grid>
 </Page>

@@ -18,6 +18,14 @@
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <PackageCertificateKeyFile>TrackAChild_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+    <PackageCertificateThumbprint>165634948F81D75AE94A2B3AE1043577AFE308EB</PackageCertificateThumbprint>
+    <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <GenerateTestArtifacts>True</GenerateTestArtifacts>
+    <AppxBundle>Always</AppxBundle>
+    <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
+    <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -147,6 +155,7 @@
     <Compile Include="Behaviors\NavigationViewHeaderMode.cs" />
     <Compile Include="Converters\AssignedValueToStringConverter.cs" />
     <Compile Include="Converters\ComboBoxItemConvert.cs" />
+    <Compile Include="Converters\TimeToStringConverter.cs" />
     <Compile Include="Converters\InverseBooleanConverter.cs" />
     <Compile Include="Converters\PassengerModelToTypeString.cs" />
     <Compile Include="Helpers\Address.cs" />
@@ -159,6 +168,7 @@
     <Compile Include="Helpers\RelayCommand.cs" />
     <Compile Include="Helpers\RootObject.cs" />
     <Compile Include="Helpers\Specs.cs" />
+    <Compile Include="Helpers\StatusEnum.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Interfaces\IBusService.cs" />
     <Compile Include="Interfaces\IDriverService.cs" />

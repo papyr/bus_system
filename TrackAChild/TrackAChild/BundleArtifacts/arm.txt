@@ -1,0 +1,2 @@
+MainPackage=C:\Users\Suzan\Documents\BusSystem\TrackAChild\TrackAChild\bin\ARM\Debug\TrackAChild_1.0.0.0_ARM_Debug.msix
+SymbolPackage=C:\Users\Suzan\Documents\BusSystem\TrackAChild\TrackAChild\obj\ARM\Debug\Symbols\TrackAChild_1.0.0.0_ARM_Debug.appxsym

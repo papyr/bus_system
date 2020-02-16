@@ -1,0 +1,2 @@
+MainPackage=C:\Users\Suzan\Documents\BusSystem\TrackAChild\TrackAChild\bin\x86\Debug\TrackAChild_1.0.0.0_x86_Debug.msix
+SymbolPackage=C:\Users\Suzan\Documents\BusSystem\TrackAChild\TrackAChild\obj\x86\Debug\Symbols\TrackAChild_1.0.0.0_x86_Debug.appxsym

@@ -12,7 +12,7 @@ namespace TrackAChild
         private string routeName;
         public string RouteName { get { return routeName; } set { routeName = value; OnPropertyChanged(nameof(RouteName)); } }
 
-        private ObservableCollection<StopModel> stops;
+        private ObservableCollection<StopModel> stops = new ObservableCollection<StopModel>();
         public ObservableCollection<StopModel> Stops 
         { get { return stops; } set { stops = value; OnPropertyChanged(nameof(Stops)); } }
 

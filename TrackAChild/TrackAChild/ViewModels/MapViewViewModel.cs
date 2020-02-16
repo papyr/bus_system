@@ -6,6 +6,8 @@ using Windows.UI;
 using Windows.Devices.Geolocation;
 using TrackAChild.Helpers;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
+using System.Linq;
 
 namespace TrackAChild.ViewModels
 {
@@ -13,6 +15,43 @@ namespace TrackAChild.ViewModels
     {
         IRouteService routeService;
         IMapService mapService;
+
+        public ICommand MapLoaded { get; set; }
+
+        public MapControl Map { get; private set; }
+
+        public ObservableCollection<RouteModel> Routes
+        {
+            get { return routeService.Routes; }
+        }
+
+        private RouteModel routeSelected;
+        public RouteModel RouteSelected
+        {
+            get { return routeSelected; }
+            set
+            {
+                if (routeSelected != value)
+                {
+                    Set(ref routeSelected, value);
+                    Stops = routeSelected.Stops;
+                }
+            }
+        }
+
+        private ObservableCollection<StopModel> stops;
+        public ObservableCollection<StopModel> Stops
+        {
+            get { return stops; }
+            set { Set(ref stops, value); }
+        }
+
+        private StopModel selectedStop;
+        public StopModel SelectedStop
+        {
+            get { return selectedStop; }
+            set { Set(ref selectedStop, value); }
+        }
 
         private const double DefaultZoomLevel = 17;
 
@@ -49,6 +88,16 @@ namespace TrackAChild.ViewModels
             routeService = (App.Current as App).Container.GetService<IRouteService>();
             mapService = (App.Current as App).Container.GetService<IMapService>();
 
+            // Get first route in list and set to selected
+            if (Routes.Count == 0)
+            {
+                RouteSelected = new RouteModel();
+            }
+            else
+            {
+                RouteSelected = Routes.First();
+            }
+
             // create a routerpoint from a location.
             // snaps the given location to the nearest routable edge.
             var start = mapService.RetrieveRouterPoint(51.443570f, -0.344270f);
@@ -81,6 +130,12 @@ namespace TrackAChild.ViewModels
             };
 
             MapLayers.Add(layer);
+
+            MapLoaded = new RelayCommand<object>((param) =>
+            {
+                MapControl newMap = param as MapControl;
+                Map = newMap;
+            });
         }
     }
 }
