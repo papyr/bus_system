@@ -6,12 +6,15 @@ using System.Collections.ObjectModel;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using TrackAChild.Models;
+using Windows.Services.Maps;
+using System;
+using Windows.Devices.Geolocation;
+using System.Linq;
 
 namespace TrackAChild.ViewModels
 {
     public class SearchAddressViewModel : Observable
     {
-        IHttpService httpService;
         IStopService stopService;
 
         private StopModel tempModelToStore;
@@ -113,7 +116,6 @@ namespace TrackAChild.ViewModels
 
         public SearchAddressViewModel()
         {
-            httpService = (App.Current as App).Container.GetService<IHttpService>();
             stopService = (App.Current as App).Container.GetService<IStopService>();
 
             // New up our observable collection
@@ -128,44 +130,24 @@ namespace TrackAChild.ViewModels
                     AddressesFound.Clear();
                     AddressSelected = new StringWrapper();
 
-                    // Will need to do some proper validation here at some point
-                    var httpStreetName = StringHelper.GetFormattedStringForHttpRequest(StreetName);
+                    MapLocationFinderResult result = await
+                        MapLocationFinder.FindLocationsAsync(BuildingNumber + " " + StreetName + ", " + PostCode, null);
 
-                    // Need to get modified postcode string for http request as well
-                    var httpPostcode = StringHelper.GetFormattedStringForHttpRequest(PostCode);
-
-                    // Our string to send
-                    var httpStringToSend = BuildingNumber + "+" + httpStreetName + "," + httpPostcode;
-
-                    var response = await httpService.SendGetRequest(httpStringToSend);
-                    if (response.Length == 0)
+                    if (result.Status == MapLocationFinderStatus.Success)
                     {
-                        // handle error
-                        return;
-                    }
-
-                    // Deserialise json we have got back
-                    List<RootObject> deserialisedResponses = JsonConvert.DeserializeObject<List<RootObject>>(response);
-                    foreach (var responseObtained in deserialisedResponses)
-                    {
-                        // Sanity check (because we've seen results that don't much the desired postcode
-                        if (responseObtained.address == null)
-                        {
-                            continue;
-                        }
-
-                        if (responseObtained.address.postcode != PostCode)
-                        {
-                            continue;
-                        }
-
+                        MapAddress address = result.Locations.FirstOrDefault().Address;
+                        Geopoint point = result.Locations.FirstOrDefault().Point;
                         var stringw = new StringWrapper
                         {
-                            StringContent = BuildingNumber + " " + responseObtained.display_name,
-                            TempLatitude = decimal.Parse(responseObtained.lat),
-                            TempLongitude = decimal.Parse(responseObtained.lon)
+                            StringContent = address.FormattedAddress,
+                            TempLatitude = Convert.ToDecimal(point.Position.Latitude),
+                            TempLongitude = Convert.ToDecimal(point.Position.Longitude)
                         };
                         AddressesFound.Add(stringw);
+                    }
+                    else
+                    {
+                        return;
                     }
                 }
                 else // it's basically showing "Add" at this point, so add our item to the list of stops

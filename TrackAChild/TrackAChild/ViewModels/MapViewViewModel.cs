@@ -8,6 +8,9 @@ using TrackAChild.Helpers;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Linq;
+using Windows.Services.Maps;
+using System;
+using System.Threading.Tasks;
 
 namespace TrackAChild.ViewModels
 {
@@ -97,45 +100,43 @@ namespace TrackAChild.ViewModels
             {
                 RouteSelected = Routes.First();
             }
-
-            // create a routerpoint from a location.
-            // snaps the given location to the nearest routable edge.
-            var start = mapService.RetrieveRouterPoint(51.443570f, -0.344270f);
-            var end = mapService.RetrieveRouterPoint(51.425330f, -0.370930f);
-
-            // calculate a route.
-            var route = mapService.CalculateRoute(start, end);
-
-            // Add polylines
-            List<BasicGeoposition> positionValues = new List<BasicGeoposition>();
-            foreach (var stop in route.Shape)
-            {
-                positionValues.Add(new BasicGeoposition { Latitude = stop.Latitude, Longitude = stop.Longitude });
-            }
-
-            MapPolyline polyline = new MapPolyline
-            {
-                StrokeColor = Colors.Blue,
-                StrokeThickness = 12
-            };
-
-            polyline.Path = new Geopath(positionValues);
-
-            // Proper way is to create a map element layer
-            var elements = new List<MapElement>() { polyline };
-            var layer = new MapElementsLayer
-            {
-                ZIndex = 1,
-                MapElements = elements
-            };
-
-            MapLayers.Add(layer);
-
+            
             MapLoaded = new RelayCommand<object>((param) =>
             {
                 MapControl newMap = param as MapControl;
                 Map = newMap;
             });
+
+            // Calculate route
+            Calc();
+        }
+
+        private async void Calc()
+        {
+            var route = await mapService.CalculateRoute(new List<BasicGeoposition>()
+                {
+                    new BasicGeoposition() { Latitude = 51.443570f, Longitude = -0.344270f },
+                    new BasicGeoposition() { Latitude = 51.425330f, Longitude = -0.370930f }
+                }
+            );
+
+            if (route != null)
+            {
+                route.RouteColor = Colors.Yellow;
+                route.OutlineColor = Colors.Black;
+                Map.Routes.Add(route);
+            }
+
+            SetBounds(route);
+        }
+
+        private async void SetBounds(MapRouteView mapRouteView)
+        {
+            // Fit the MapControl to the route.
+            await Map.TrySetViewBoundsAsync(
+                  mapRouteView.Route.BoundingBox,
+                  new Windows.UI.Xaml.Thickness(20),
+                  MapAnimationKind.Bow);
         }
     }
 }

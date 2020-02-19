@@ -169,10 +169,8 @@
     <Compile Include="Helpers\RootObject.cs" />
     <Compile Include="Helpers\Specs.cs" />
     <Compile Include="Helpers\StatusEnum.cs" />
-    <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Interfaces\IBusService.cs" />
     <Compile Include="Interfaces\IDriverService.cs" />
-    <Compile Include="Interfaces\IHttpService.cs" />
     <Compile Include="Interfaces\IMapService.cs" />
     <Compile Include="Interfaces\IOSPathDependencies.cs" />
     <Compile Include="Interfaces\IPassengerService.cs" />
@@ -191,7 +189,6 @@
     <Compile Include="Activation\DefaultActivationHandler.cs" />
     <Compile Include="Services\BusService.cs" />
     <Compile Include="Services\DriverService.cs" />
-    <Compile Include="Services\HttpService.cs" />
     <Compile Include="Services\LocationService.cs" />
     <Compile Include="Services\MapService.cs" />
     <Compile Include="Services\NavigationService.cs" />

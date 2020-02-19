@@ -23,6 +23,10 @@ namespace TrackAChild
 
             // Deferred execution until used. Check https://msdn.microsoft.com/library/dd642331(v=vs.110).aspx for further info on Lazy<T> class.
             _activationService = new Lazy<ActivationService>(CreateActivationService);
+
+            // Set the key for the map service
+            Windows.Services.Maps.MapService.ServiceToken
+                = "Iy8hICk2KKZV2q86cW0d~7lMbaxvOGXOvlMr-TAWyjw~ApBmHcO2WgUxnO3NyQkxP4ddkvmQB2CWD7Szo2ukxnVAUrYq9TwGlTNxG77JERwr";
         }
 
         protected override async void OnLaunched(LaunchActivatedEventArgs args)
@@ -73,7 +77,6 @@ namespace TrackAChild
             serviceCollection.AddTransient<AssignBusViewModel>();
             serviceCollection.AddTransient<AssignPassengersViewModel>();
             serviceCollection.AddTransient<ViewPassengerListViewModel>();
-            serviceCollection.AddSingleton<IHttpService, HttpService>();
             serviceCollection.AddSingleton<IDriverService, DriverService>();
             serviceCollection.AddSingleton<IRouteService, RouteService>();
             serviceCollection.AddSingleton<IMapService, MapService>();

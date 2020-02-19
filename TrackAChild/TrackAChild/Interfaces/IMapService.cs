@@ -1,10 +1,12 @@
-﻿using Itinero;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Windows.Devices.Geolocation;
+using Windows.UI.Xaml.Controls.Maps;
 
 namespace TrackAChild.Interfaces
 {
     internal interface IMapService
     {
-        RouterPoint RetrieveRouterPoint(float latitude, float longitude);
-        Route CalculateRoute(RouterPoint start, RouterPoint end);
+        Task<MapRouteView> CalculateRoute(List<BasicGeoposition> basicGeopositions);
     }
 }
