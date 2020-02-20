@@ -34,10 +34,11 @@ namespace TrackAChild.ViewModels
             get { return routeSelected; }
             set
             {
-                if (routeSelected != value)
+                if (routeSelected != value && value != null)
                 {
                     Set(ref routeSelected, value);
                     Stops = routeSelected.Stops;
+                    CalculateRouteToDisplay();
                 }
             }
         }
@@ -91,35 +92,30 @@ namespace TrackAChild.ViewModels
             routeService = (App.Current as App).Container.GetService<IRouteService>();
             mapService = (App.Current as App).Container.GetService<IMapService>();
 
-            // Get first route in list and set to selected
-            if (Routes.Count == 0)
-            {
-                RouteSelected = new RouteModel();
-            }
-            else
-            {
-                RouteSelected = Routes.First();
-            }
-            
             MapLoaded = new RelayCommand<object>((param) =>
             {
                 MapControl newMap = param as MapControl;
                 Map = newMap;
             });
-
-            // Calculate route
-            Calc();
         }
 
-        private async void Calc()
+        private async void CalculateRouteToDisplay()
         {
-            var route = await mapService.CalculateRoute(new List<BasicGeoposition>()
-                {
-                    new BasicGeoposition() { Latitude = 51.443570f, Longitude = -0.344270f },
-                    new BasicGeoposition() { Latitude = 51.425330f, Longitude = -0.370930f }
-                }
-            );
+            // Clear map routes
+            Map.Routes.Clear();
 
+            // Get list of all longitude and latitude values from our Stops
+            List<BasicGeoposition> allLongitudesAndLatitudes = new List<BasicGeoposition>();
+            foreach (var stop in Stops)
+            {
+                allLongitudesAndLatitudes.Add(new BasicGeoposition()
+                {
+                    Latitude = decimal.ToDouble(stop.Latitude),
+                    Longitude = decimal.ToDouble(stop.Longitude)
+                });
+            }
+
+            var route = await mapService.CalculateRoute(allLongitudesAndLatitudes);
             if (route != null)
             {
                 route.RouteColor = Colors.Yellow;
