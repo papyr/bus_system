@@ -158,10 +158,12 @@
     <Compile Include="Converters\TimeToStringConverter.cs" />
     <Compile Include="Converters\InverseBooleanConverter.cs" />
     <Compile Include="Converters\PassengerModelToTypeString.cs" />
+    <Compile Include="Helpers\AccountHelper.cs" />
     <Compile Include="Helpers\Address.cs" />
     <Compile Include="Helpers\AgeGroupCapabilities.cs" />
     <Compile Include="Helpers\DateTimeHelper.cs" />
     <Compile Include="Helpers\Maintenance.cs" />
+    <Compile Include="Helpers\MicrosoftPassportHelper.cs" />
     <Compile Include="Helpers\NavHelper.cs" />
     <Compile Include="Helpers\Observable.cs" />
     <Compile Include="Helpers\PassengerEnum.cs" />
@@ -185,6 +187,7 @@
     <Compile Include="Models\StopModel.cs" />
     <Compile Include="Models\StringWrapper.cs" />
     <Compile Include="Models\StudentModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Services\ActivationService.cs" />
     <Compile Include="Activation\DefaultActivationHandler.cs" />
     <Compile Include="Services\BusService.cs" />

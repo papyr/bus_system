@@ -3,6 +3,7 @@
 using TrackAChild.ViewModels;
 
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace TrackAChild.Views
 {
@@ -13,6 +14,14 @@ namespace TrackAChild.Views
         public MainPage()
         {
             InitializeComponent();
+
+            DataContext = ViewModel;
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            ViewModel.NavigatedToCommand.Execute(e.Uri);
         }
     }
 }

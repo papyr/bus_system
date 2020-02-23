@@ -115,15 +115,18 @@ namespace TrackAChild.ViewModels
                 });
             }
 
-            var route = await mapService.CalculateRoute(allLongitudesAndLatitudes);
-            if (route != null)
+            if (allLongitudesAndLatitudes.Count >= 2)
             {
-                route.RouteColor = Colors.Yellow;
-                route.OutlineColor = Colors.Black;
-                Map.Routes.Add(route);
-            }
+                var route = await mapService.CalculateRoute(allLongitudesAndLatitudes);
+                if (route != null)
+                {
+                    route.RouteColor = Colors.Yellow;
+                    route.OutlineColor = Colors.Black;
+                    Map.Routes.Add(route);
+                }
 
-            SetBounds(route);
+                SetBounds(route);
+            }
         }
 
         private async void SetBounds(MapRouteView mapRouteView)
